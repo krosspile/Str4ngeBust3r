@@ -7,8 +7,7 @@
     },
     "server": {
         "exploit": {
-            "send_time": 20,
-            "token": null
+            "send_time": 20
         },
         "host": "http://192.168.0.172",
         "port": 5000

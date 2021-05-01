@@ -4,27 +4,24 @@ import threading
 import logging
 import requests
 import sploiter
-
 from utils import get_config, get_logger
-
 from client import app
 
 
-def post_flags():
+def post_flags(data):
 
     url = f"{config['server']['host']}:{config['server']['port']}/api/post_flags"
-    data = [{'flag': "CCIT{ban4n4_ctf_ciao_ciao_ciao}",
-             'sploit': "bomberone", 'team': "ciupalo"}]
-    token = config["server"]["exploit"]["token"]
-    headers = {"Content-Type": "application/json"}
 
-    if token is not None:
-        headers["X-Token"] = token
+    for team_name, expoloit_name, flag in data:
 
-    request = requests.post(url, json=data, headers=headers)
+        data = [{'flag': flag,
+                'sploit': expoloit_name, 'team': team_name}]
 
-    print(request.text)
+        headers = {"Content-Type": "application/json"}
 
+        request = requests.post(url, json=data, headers=headers)
+
+    
 
 def run_flask(host, port):
     app.run(host=host, port=port, threaded=True)
@@ -44,7 +41,9 @@ if __name__ == '__main__':
 
     logging.info("Flask started")
 
-    # post_flags()
     exploit = sploiter.Exploit('ciao.py')
 
     exploit.run_exploit()
+
+    while True:
+        post_flags(exploit.get_flags())
