@@ -12,7 +12,6 @@ def get_config():
 def get_logger():
     format = "%(asctime)s: %(message)s"
     datefmt = "%H:%M:%S"
-
     logging.basicConfig(format=format, level=logging.INFO, datefmt=datefmt)
 
 
@@ -28,5 +27,4 @@ def allowed_extension(filename):
 def parse_flag(input):
     regex = get_config()["flag_regex"]
     result = re.findall(regex, input)
-
     return result[0] if result else None

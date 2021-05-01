@@ -36,7 +36,6 @@ def scan_folder():
 
 
 def run_exploits():
-
     while True:
 
         exploits = []
@@ -64,7 +63,6 @@ def run_flask(host, port):
 
 
 def start_services():
-
     scan_daemon = threading.Thread(target=scan_folder, daemon=True)
     scan_daemon.start()
     logging.info("Scanner daemon started")
@@ -80,7 +78,6 @@ def start_services():
 
 
 if __name__ == '__main__':
-
     config = get_config()
     get_logger()
     start_services()

@@ -12,7 +12,6 @@ class Exploit:
         self.flags = []
 
     def store_flag(self, team_name, flag):
-
         with self._lock:
             entry = (team_name, flag)
 
@@ -20,7 +19,6 @@ class Exploit:
                 self.flags.append(entry)
 
     def attack_team(self, team_name, ip_address):
-
         script_path = join(get_config()["client"]["exploit_path"], self.name)
         output = check_output(["python3", script_path, ip_address]).decode()
 
@@ -30,16 +28,14 @@ class Exploit:
             self.store_flag(team_name, flag)
 
     def get_flags(self):
-
         with self._lock:
             data = [(team_name, self.name, flag)
                     for team_name, flag in self.flags]
-
             self.flags.clear()
 
         return data
 
-    def run(self):  # run script for every team
+    def run(self):
         teams = get_teams()["teams"]
         threads = []
 
