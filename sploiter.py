@@ -1,5 +1,5 @@
 from subprocess import check_output
-from utils import is_flag, get_teams, get_config
+from utils import get_flag, get_teams, get_config
 from concurrent.futures import ThreadPoolExecutor
 import threading
 
@@ -17,7 +17,9 @@ class Exploit:
     def store_flag():
         with self._lock:
             entry = (team_name, flag)
-            flags.append(entry) if entry not in self.flags
+
+            if entry not in self.flags:
+                flags.append(entry)
 
     def attack_team(self, team_name, ip_address):
 
