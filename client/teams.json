@@ -1,0 +1,8 @@
+{
+    "teams": {
+        "TeamBanana": "192.168.0.128",
+        "TeamFortress": "192.168.1.128",
+        "TeamRubabanane": "192.168.2.128",
+        "TeammUcchi": "192.168.3.128"
+    }
+}
