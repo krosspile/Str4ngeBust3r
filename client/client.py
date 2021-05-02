@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, flash, redirect
-from utils import allowed_extension, get_config
+from utils import allowed_extension, get_config, scan_folder
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    return render_template('index.html')
+    return render_template('index.html', exploits=scan_folder())
 
 
 @app.route('/send_exploit', methods=['GET', 'POST'])

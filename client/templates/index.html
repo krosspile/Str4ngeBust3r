@@ -1,15 +1,135 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title>Client</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Str4nge Client</title>
+    <script defer src="https://use.fontawesome.com/releases/v5.4.2/js/all.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+
+    <style>
+        body {
+            background-color: rgb(37, 10, 73);
+            font-family: "Poppins", sans-serif;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            width: 70%;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .box {
+            background-color: white;
+            border-radius: 6px;
+            width: 600px;
+            height: 320px;
+            margin: 10px;
+            box-shadow: rgb(10 10 10 / 10%) 0px 0.5em 1em -0.125em, rgb(10 10 10 / 2%) 0px 0px 0px 1px;
+        }
+
+         .title {
+            background-color: tomato;
+            padding: 10px;
+            color: white;
+            font-size: 20px;
+            text-shadow: 1px 2px 1px rgb(0, 0, 0, 0.1);
+            height: 30px;
+            border-radius: 6px 6px 0 0;
+            font-weight: 700;
+        }
+
+        .box p {
+            padding: 5px;
+        }
+
+        #exploits {
+            overflow-y: scroll;
+            position: relative;
+            top: 20px;
+            height: 250px;
+        }
+
+        button {
+            background-color:#0bac94;
+            border: none;
+            text-shadow: 1px 2px 1px rgb(0, 0, 0, 0.1);
+            color: white;
+            box-shadow: rgb(10 10 10 / 10%) 0px 0.5em 1em -0.125em, rgb(10 10 10 / 2%) 0px 0px 0px 1px;
+            padding: 2px 5px;
+            position: absolute;
+            right: 50px;
+            border-radius: 6px;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <form action='/send_exploit' method=POST enctype="multipart/form-data">
-        <input type="file" name="exploit" />
-        <input type="submit" />
-    </form>
 
+    <section class="container">
+        <div class="box">
+            <div class="title" style="background-color: #00d1b2;">
+                <i class="fas fa-skull-crossbones"></i> Exploit upload
+            </div>
+            <p>
+                Only python scripts are allowed. Remember that your script have to print only the flag, make attention
+                at the filename because you may overwrite accidentally another running exploit.
+            <form action='/send_exploit' method=POST enctype="multipart/form-data" style="text-align: center;">
+                <input type="file" class="form-control-file" name="exploit" />
+                <input type="submit" class="btn btn-primary btn-lg" />
+            </form>
+            </span>
+            </p>
+        </div>
+        <div class="box">
+            <div class="title" style="background-color: #00d1b2;">
+                <i class="fas fa-clipboard-list"></i> Scheduled exploits
+            </div>
+            <div id="exploits">
+                {% for e in exploits %}
+            <div style="margin: 0px 0px 30px 30px">{{ e
+                }}<button>Delete</button></div>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="box">
+            <div class="title" style="background-color:rgb(255, 221, 87)">
+                <i class="fas fa-chart-bar"></i> Exploits stats
+            </div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula, libero eget
+                dapibus euismod, ex ante eleifend metus, vel posuere neque nunc eget nunc. Ut eleifend
+                quam eu massa sagittis semper. Maecenas ac tellus lorem. Aenean leo ex, sodales in ex
+                eu, rutrum tristique sem. Proin gravida sit amet nisi ac placerat. Aliquam et neque
+                facilisis augue faucibus convallis in elementum lacus. Suspendisse purus nisl, fringilla
+                in mi a, placerat consectetur lectus. Suspendisse dictum, enim ut posuere mollis, metus
+                sem tempor purus, a rhoncus mauris ante vitae ex
+            </p>
+
+        </div>
+        <div class="box">
+            <div class="title" style="background-color:rgb(255, 221, 87)">
+                <i class="fas fa-mask"></i> Logs
+            </div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula, libero eget
+                dapibus euismod, ex ante eleifend metus, vel posuere neque nunc eget nunc. Ut eleifend
+                quam eu massa sagittis semper. Maecenas ac tellus lorem. Aenean leo ex, sodales in ex
+                eu, rutrum tristique sem. Proin gravida sit amet nisi ac placerat. Aliquam et neque
+                facilisis augue faucibus convallis in elementum lacus. Suspendisse purus nisl, fringilla
+                in mi a, placerat consectetur lectus. Suspendisse dictum, enim ut posuere mollis, metus
+                sem tempor purus, a rhoncus mauris ante vitae ex
+            </p>
+
+        </div>
+
+
+    </section>
 </body>
 
 </html>
