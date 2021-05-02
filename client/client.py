@@ -8,8 +8,6 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    all_exploits = scan_folder()
-    print(all_exploits)
     return render_template('index.html', exploits=scan_folder())
 
 
