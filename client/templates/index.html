@@ -69,7 +69,8 @@
                             at the filename because you may overwrite accidentally another running exploit.
                         </p>
                     </div>
-                    <form action='/send_exploit' method="POST" enctype="multipart/form-data" style="text-align: center;">
+                    <form action='/send_exploit' method="POST" enctype="multipart/form-data"
+                        style="text-align: center;">
                         <div class="row mt-5">
 
                             <div class="col-lg-10">
@@ -87,15 +88,21 @@
                     <i class="fas fa-clipboard-list"></i> Scheduled exploits
                 </div>
                 <div class="post" id="exploits">
-                    {% for e in exploits %}
+                    {% for name,status in exploits %}
                     <div class="row mb-2 exploit-row">
                         <div class="col-4 d-flex align-items-center">
-                            {{ e }}
+                            {{ name }}
                         </div>
                         <div class="col-8 d-flex justify-content-end">
-                            <a href="/start/{{ e }}" class="btn btn-primary btn-sm ms-2"><i class="fas fa-bomb"></i> Start</a>
-                            <a href="/stop/{{ e }}" class="btn btn-primary btn-sm ms-2"><i class="fas fa-bug"></i> Stop</a>
-                            <a href="/start/{{ e }}" class="btn btn-primary btn-sm ms-2"><i class="fas fa-bug"></i> Delete</a>
+                            {% if status == 1%}
+                            <a href="/start/{{ name }}" class="btn btn-primary btn-sm ms-2"><i class="fas fa-bomb"></i>
+                                Start</a>
+                            {% else %}
+                            <a href="/stop/{{ name }}" class="btn btn-primary btn-sm ms-2"><i class="fas fa-bug"></i>
+                                Stop</a>
+                            {% endif %}
+                            <a href="/delete/{{ name }}" class="btn btn-primary btn-sm ms-2"><i class="fas fa-trash"></i>
+                                Delete</a>
                             <a class="btn btn-primary btn-sm ms-2"><i class="fas fa-scroll"></i> View logs</a>
                         </div>
                     </div>

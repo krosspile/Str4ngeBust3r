@@ -27,8 +27,9 @@ def run_exploits():
         exploits = []
         threads = []
 
-        for file_name in scan_folder():
-            exploits.append(sploiter.Exploit(file_name))
+        for file_name, status in scan_folder():
+            if status == 0: # not stopped
+                exploits.append(sploiter.Exploit(file_name))
 
         for exploit in exploits:
             thread = threading.Thread(target=exploit.run)

@@ -1,7 +1,7 @@
 import logging
 import threading
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, isdir
 import time
 import json
 import re
@@ -34,5 +34,23 @@ def parse_flag(input):
 
 
 def scan_folder():
+    '''
+    We use a tuple to distinguish exploit status:
+    0: running
+    1: stopped
+    '''
+
     folder = get_config()['client']['exploit_path']
-    return [file for file in listdir(folder) if isfile(join(folder, file))]
+    files = []
+
+    for file in listdir(folder):
+        path = join(folder, file)
+
+        if isfile(path):
+            files.append((file, 0))
+
+        elif isdir(path):
+            for subfile in listdir(path):
+                files.append((subfile, 1))
+
+    return files
