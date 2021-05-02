@@ -4,13 +4,9 @@ import threading
 import logging
 import requests
 import sploiter
-from os import listdir
-from os.path import isfile, join
-from utils import get_config, get_logger
+from utils import get_config, get_logger, scan_folder
 from client import app
 import time
-
-active_exploits = []
 
 
 def post_flags(data):
@@ -25,23 +21,13 @@ def post_flags(data):
         request = requests.post(url, json=data, headers=headers)
 
 
-def scan_folder():
-    global active_exploits
-    folder = get_config()['client']['exploit_path']
-
-    while True:
-        active_exploits = [file for file in listdir(
-            folder) if isfile(join(folder, file))]
-        time.sleep(5)
-
-
 def run_exploits():
     while True:
 
         exploits = []
         threads = []
 
-        for file_name in active_exploits:
+        for file_name in scan_folder():
             exploits.append(sploiter.Exploit(file_name))
 
         for exploit in exploits:
@@ -63,14 +49,10 @@ def run_flask(host, port):
 
 
 def start_services():
-    scan_daemon = threading.Thread(target=scan_folder, daemon=True)
-    scan_daemon.start()
-    logging.info("Scanner daemon started")
-
     flask_daemon = threading.Thread(target=run_flask, args=(
         config["client"]["host"], config["client"]["port"]))
     flask_daemon.start()
-    logging.info("Flask daemon started")
+    logging.info("Flask service started")
 
     runner_daemon = threading.Thread(target=run_exploits, daemon=True)
     runner_daemon.start()

@@ -1,5 +1,8 @@
 import logging
 import threading
+from os import listdir
+from os.path import isfile, join
+import time
 import json
 import re
 
@@ -28,3 +31,8 @@ def parse_flag(input):
     regex = get_config()["flag_regex"]
     result = re.findall(regex, input)
     return result[0] if result else None
+
+
+def scan_folder():
+    folder = get_config()['client']['exploit_path']
+    return [file for file in listdir(folder) if isfile(join(folder, file))]
