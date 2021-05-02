@@ -46,10 +46,10 @@
             border-radius: 6px;
         }
 
-        .exploit-row button:hover {
+        .exploit-row a:hover {
             background-color: aliceblue;
             color: black;
-            transition: background-color 0.5s ease;
+            transition: background-color 0.1s ease;
         }
     </style>
 </head>
@@ -69,11 +69,11 @@
                             at the filename because you may overwrite accidentally another running exploit.
                         </p>
                     </div>
-                    <form action='/send_exploit' method=POST enctype="multipart/form-data" style="text-align: center;">
+                    <form action='/send_exploit' method="POST" enctype="multipart/form-data" style="text-align: center;">
                         <div class="row mt-5">
 
                             <div class="col-lg-10">
-                                <input class="form-control" type="file" id="formFile">
+                                <input class="form-control" type="file" name="exploit" id="formFile">
                             </div>
                             <div class="col-lg-2">
                                 <input type="submit" class="btn btn-primary" />
@@ -93,10 +93,10 @@
                             {{ e }}
                         </div>
                         <div class="col-8 d-flex justify-content-end">
-                            <button class="btn btn-primary btn-sm ms-2"><i class="fas fa-bomb"></i> Start</button>
-                            <button class="btn btn-primary btn-sm ms-2"><i class="fas fa-bug"></i> Stop</button>
-                            <button class="btn btn-primary btn-sm ms-2"><i class="fas fa-bug"></i> Delete</button>
-                            <button class="btn btn-primary btn-sm ms-2"><i class="fas fa-scroll"></i> View logs</button>
+                            <a href="/start/{{ e }}" class="btn btn-primary btn-sm ms-2"><i class="fas fa-bomb"></i> Start</a>
+                            <a href="/stop/{{ e }}" class="btn btn-primary btn-sm ms-2"><i class="fas fa-bug"></i> Stop</a>
+                            <a href="/start/{{ e }}" class="btn btn-primary btn-sm ms-2"><i class="fas fa-bug"></i> Delete</a>
+                            <a class="btn btn-primary btn-sm ms-2"><i class="fas fa-scroll"></i> View logs</a>
                         </div>
                     </div>
                     {% endfor %}
