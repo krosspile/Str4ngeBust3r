@@ -53,6 +53,6 @@ def scan_folder():
             for subfile in listdir(path):
                 files.append((subfile, 1))
 
-    files.sort(key= lambda file: file[0])
-    
+    files.sort(key=lambda file: file[0])
+
     return files
