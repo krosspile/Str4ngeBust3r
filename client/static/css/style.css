@@ -1,0 +1,40 @@
+body {
+    background-color: rgb(31, 32, 75);
+    color: rgb(231, 250, 255)
+}
+
+p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.title {
+    margin-top: 20px;
+    padding: 10px;
+    text-shadow: 1px 2px 1px rgb(0, 0, 0, 0.1);
+    border-radius: 6px 6px 0 0;
+    font-weight: 700;
+}
+
+.post {
+    background-color: white;
+    color: black;
+    padding: 15px;
+    border-radius: 0px 0px 6px 6px;
+    height: 250px;
+}
+
+#exploits {
+    overflow-y: scroll;
+}
+
+.exploit-row {
+    padding: 5px;
+    border-radius: 6px;
+}
+
+.exploit-row a:hover {
+    background-color: aliceblue;
+    color: black;
+    transition: background-color 0.1s ease;
+}
