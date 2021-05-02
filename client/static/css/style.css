@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(31, 32, 75);
+    background-color: #01172F;
     color: rgb(231, 250, 255)
 }
 
@@ -22,6 +22,7 @@ p {
     padding: 15px;
     border-radius: 0px 0px 6px 6px;
     height: 250px;
+    box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
 }
 
 #exploits {
@@ -31,6 +32,10 @@ p {
 .exploit-row {
     padding: 5px;
     border-radius: 6px;
+}
+
+.exploit-row .custom {
+    border: none;
 }
 
 .exploit-row a:hover {

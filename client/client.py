@@ -50,9 +50,14 @@ def stop_exploit(exploit):
     return redirect('/')
 
 
-@app.route('/delete/<exploit>')
-def delete_exploit(exploit):
+@app.route('/delete/<exploit>/<status>')
+def delete_exploit(exploit, status):
     filename = secure_filename(exploit)
-    os.remove(os.path.join(get_config()["client"]["exploit_path"], filename))
+    
+    if status == "0":
+        os.remove(os.path.join(get_config()["client"]["exploit_path"], filename))
+    
+    elif status == "1":
+        os.remove(os.path.join(get_config()["client"]["exploit_path"], f"stopped/{filename}"))    
 
     return redirect('/')
