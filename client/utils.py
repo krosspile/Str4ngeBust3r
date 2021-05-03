@@ -88,8 +88,9 @@ def process_logs(exploit_name):
     return exploit
 
 
-def clear_logs():
-    folder = get_config()["logs"]["folder"]
+def clear_logs(subfolder=""):
+    folder = os.path.join(get_config()["logs"]["folder"], subfolder)
 
-    if os.path.exists(folder):
-        shutil.rmtree(folder)
+    with _lock:
+        if os.path.exists(folder):
+            shutil.rmtree(folder)

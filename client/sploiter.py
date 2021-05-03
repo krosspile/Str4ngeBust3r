@@ -1,5 +1,5 @@
 import subprocess
-from utils import parse_flag, get_teams, get_config, write_log
+from utils import parse_flag, get_teams, get_config, write_log, clear_logs
 from os.path import join
 import threading
 
@@ -30,6 +30,7 @@ class Exploit:
 
         if flag:
             self.store_flag(team_name, flag)
+            clear_logs(self.name.strip('.py'))
         else:
             write_log(self.name, team_name, FLAG_ERROR)
 
