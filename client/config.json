@@ -11,7 +11,7 @@
     },
     "logs": {
         "folder": "logs",
-        "quantity": 10
+        "history": 10
     },
     "flag_regex": ".+",
     "round_timer": 60
