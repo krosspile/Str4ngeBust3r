@@ -61,7 +61,7 @@ def scan_folder():
 
 def write_log(exploit_name, team_name, stream):
     folder = os.path.join(
-        get_config()["logs"]["folder"], "last", exploit_name.strip('.py'))
+        get_config()["logs"]["folder"], exploit_name.strip('.py'))
 
     with _lock:
         if not os.path.exists(folder):
@@ -74,7 +74,7 @@ def write_log(exploit_name, team_name, stream):
 def process_logs(exploit_name):
     exploit = {}
     folder = os.path.join(
-        get_config()["logs"]["folder"], "last", exploit_name.strip('.py'))
+        get_config()["logs"]["folder"], exploit_name.strip('.py'))
 
     # handle the case when all exploits work
     try:
@@ -83,10 +83,7 @@ def process_logs(exploit_name):
         logs = []
 
     for team in get_teams()["teams"]:
-        if team in logs:
-            exploit[team] = False
-        else:
-            exploit[team] = True
+        exploit[team] = False if team in logs else True
 
     return exploit
 
@@ -95,13 +92,4 @@ def clear_logs():
     folder = get_config()["logs"]["folder"]
 
     if os.path.exists(folder):
-        for subfolder in os.listdir(folder):
-            shutil.rmtree(os.path.join(folder, subfolder))
-
-
-def push_log(round):
-    folder = get_config()["logs"]["folder"]
-    target = os.path.join(folder, "last")
-
-    if os.path.exists(target):
-        os.rename(target, os.path.join(folder, f"round_{round}"))
+        shutil.rmtree(folder)

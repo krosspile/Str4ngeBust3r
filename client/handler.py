@@ -27,19 +27,6 @@ def post_flags(data):
             continue
 
 
-def manage_logs():
-    rounds = 0
-
-    while True:
-        rounds += 1
-        time.sleep(utils.get_config()["round_timer"])
-
-        if rounds % utils.get_config()["logs"]["history"] == 0:
-            utils.clear_logs()
-
-        utils.push_log(rounds)
-
-
 def run_exploits():
     while True:
 
@@ -80,10 +67,6 @@ def start_services():
     runner_daemon = threading.Thread(target=run_exploits, daemon=True)
     runner_daemon.start()
     logging.info("Exploits daemon started")
-
-    logs_daemon = threading.Thread(target=manage_logs, daemon=True)
-    logs_daemon.start()
-    logging.info("Flags logger daemon started")
 
 
 if __name__ == '__main__':

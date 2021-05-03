@@ -10,9 +10,7 @@
         "port": 5000
     },
     "logs": {
-        "folder": "logs",
-        "history": 10
+        "folder": "logs"
     },
-    "flag_regex": ".+",
-    "round_timer": 60
+    "flag_regex": ".+"
 }

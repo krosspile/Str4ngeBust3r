@@ -23,7 +23,7 @@ class Exploit:
     def attack_team(self, team_name, ip_address):
         script_path = join(get_config()["client"]["exploit_path"], self.name)
 
-        stdout = output = subprocess.check_output(
+        stdout = subprocess.check_output(
             ["python3", script_path, ip_address])
 
         flag = parse_flag(stdout.decode())
