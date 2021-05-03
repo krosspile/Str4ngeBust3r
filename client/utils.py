@@ -73,7 +73,8 @@ def write_log(exploit_name, team_name, stream):
 
 def process_logs(exploit_name):
     exploit = {}
-    folder = os.path.join(get_config()["logs"]["folder"], "last", exploit_name)
+    folder = os.path.join(
+        get_config()["logs"]["folder"], "last", exploit_name.strip('.py'))
 
     # handle the case when all exploits work
     try:
