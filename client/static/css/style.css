@@ -48,11 +48,11 @@ p {
 
 
 #submit-exploit {
-    background-color: #ff8a5b;
+    background-color: #df6333;
 }
 
 #submit-exploit:hover {
-    background-color: #c96239;
+    background-color: #ff8656;
 }
 
 .exploit-row {
@@ -60,36 +60,41 @@ p {
     border-radius: 6px;
 }
 
-.exploit-row #is-run {
-    background-color: rgb(41, 196, 118);
+.exploit-row .is-run {
+    background-color: #1dad65;
 }
 
-.exploit-row #is-run:hover {
-    background-color: rgb(20, 116, 68);
+.exploit-row .is-run:hover {
+    background-color: rgb(58, 201, 130);
 }
 
-.exploit-row #is-delete {
+.exploit-row .is-delete {
     background-color: #ff8a5b;
 }
 
-.exploit-row #is-delete:hover {
-    background-color: #be173e;
+.exploit-row .is-delete:hover {
+    background-color: #f31d39;
 }
 
-.exploit-row #is-stop {
+.exploit-row .is-stop {
     background-color: #000000;
 }
 
-.exploit-row #is-stop:hover {
-    background-color: #979797;
+.exploit-row .is-stop:hover {
+    background-color: #525252;
 }
 
-.exploit-row #is-log {
+.exploit-row .is-log {
     background-color:transparent;
     border: 1px solid #114B5F;
     color: #114B5F;
     text-decoration: none;
 }
-.exploit-row #is-log:hover {
+.exploit-row .is-log:hover {
     background-color: #75bed62f;
+}
+
+.is-hide {
+    display: none;
+    transition: all 10s ease;
 }

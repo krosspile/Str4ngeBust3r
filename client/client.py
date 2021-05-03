@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, jsonify
 from utils import allowed_extension, get_config, scan_folder
 from werkzeug.utils import secure_filename
 
@@ -34,7 +34,7 @@ def start_exploit(exploit):
     os.rename(stopped_exploit, os.path.join(
         get_config()["client"]["exploit_path"], filename))
 
-    return redirect('/')
+    return jsonify(result="Ok")
 
 
 @app.route('/stop/<exploit>')
@@ -47,7 +47,7 @@ def stop_exploit(exploit):
     os.rename(os.path.join(
         get_config()["client"]["exploit_path"], filename), stopped_path)
 
-    return redirect('/')
+    return jsonify(result="Ok")
 
 
 @app.route('/delete/<exploit>/<status>')
@@ -62,4 +62,4 @@ def delete_exploit(exploit, status):
         os.remove(os.path.join(
             get_config()["client"]["exploit_path"], f"stopped/{filename}"))
 
-    return redirect('/')
+    return jsonify(result="Ok")
