@@ -25,27 +25,22 @@ p {
     box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
 }
 
-#exploits {
-    overflow-y: scroll;
-}
-
-#log-window {
+.is-scrollable {
     overflow-y: scroll;
 }
 
 .is-btn {
-    border:none;
+    border: none;
     transition: background-color 1s ease;
-    color: white;    
+    color: white;
     text-shadow: 1px 2px 1px rgb(0, 0, 0, 0.1);
 }
 
 .is-btn:hover {
     color: white;
-    background-color: #01172fc5;    
+    background-color: #01172fc5;
     transition: background-color 1s ease;
 }
-
 
 #submit-exploit {
     background-color: #df6333;
@@ -85,11 +80,12 @@ p {
 }
 
 .exploit-row .is-log {
-    background-color:transparent;
+    background-color: transparent;
     border: 1px solid #114B5F;
     color: #114B5F;
     text-decoration: none;
 }
+
 .exploit-row .is-log:hover {
     background-color: #75bed62f;
 }

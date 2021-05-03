@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, jsonify
-from utils import allowed_extension, get_config, scan_folder
+from utils import allowed_extension, get_config, scan_folder, process_logs
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -63,3 +63,8 @@ def delete_exploit(exploit, status):
             get_config()["client"]["exploit_path"], f"stopped/{filename}"))
 
     return jsonify(result="Ok")
+
+
+@app.route('/viewlog/<exploit>')
+def view_log(exploit):
+    return jsonify(result=process_logs(exploit))

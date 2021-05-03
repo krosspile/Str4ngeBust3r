@@ -4,9 +4,36 @@ function getRowInfo(obj) {
 }
 
 $(document).ready(function () {
+    let colCounter = 0
     $(".is-log").on("click", function () {
         let data = getRowInfo($(this))
-        $("#log-window").html("<p>" + data["scriptName"] + "</p>");
+
+        $("#log-title").html(": " + data["scriptName"]);
+
+        let code = ""
+
+        $.ajax("/viewlog/" + data["scriptName"]).done(function (logs) {
+            $.each(logs["result"], (key, value) => {
+                if (colCounter % 4 == 0) {
+                    code += '<div class="row">'
+                }
+                code += '<div class="col">' + key + ' '
+
+                if (value == true) {
+                    code += ' <i class="fas fa-check" style="color: green"></i>'
+                } else {
+                    code += ' <i class="fas fa-times" style="color:red"></i>'
+                }
+
+                code += '</div>'
+                colCounter++
+
+                if (colCounter % 4 == 0) {
+                    code += '</div>'
+                }
+            })
+            $("#log-data").html(code);
+        })
     });
 
     $(".is-stop").on("click", function () {

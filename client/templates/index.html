@@ -17,11 +17,11 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col-5">
                 <div class="title" style="background-color:  rgb(0, 209, 178)">
                     <i class="fas fa-skull-crossbones"></i> Exploit upload
                 </div>
-                <div class="post">
+                <div class="post is-scrollable">
                     <div class="row">
                         <p>
                             Only python scripts are allowed. Remember that your script have to print only the flag, make
@@ -34,10 +34,10 @@
                         style="text-align: center;">
                         <div class="row mt-5">
 
-                            <div class="col-lg-10">
+                            <div class="col-9">
                                 <input class="form-control" type="file" name="exploit" id="formFile">
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col">
                                 <input type="submit" class="btn btn-primary is-btn" id="submit-exploit" />
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                 <div class="title" style="background-color:  #00d1b2">
                     <i class="fas fa-clipboard-list"></i> Scheduled exploits
                 </div>
-                <div class="post" id="exploits">
+                <div class="post is-scrollable">
                     {% for name,status in exploits %}
                     <div class="row mb-2 exploit-row" id="row-{{loop.index}}">
                         <div class="col-4 d-flex align-items-center">
@@ -57,7 +57,7 @@
                         <div class="col-8 d-flex justify-content-end">
 
                             <a class="is-log is-btn btn-sm ms-2 {% if status == 1%}is-hide{% endif %}
-                            " id="is-log-{{loop.index}}" data-name="{{name}}"><i class="fas fa-scroll"></i> Logs</a>
+                            " id="is-log-{{loop.index}}" data-name="{{name}}"><i class="fas fa-eye"></i></i> Logs</a>
 
                             <a class="btn-sm is-btn ms-2 is-run {% if status == 0%}is-hide{% endif %}"
                                 id="is-run-{{loop.index}}" data-name="{{name}}"><i class="fas fa-biohazard"></i></a>
@@ -78,11 +78,11 @@
         <div class="row">
             <div class="col-8">
                 <div class="title" style="background-color:#ff8a5b">
-                    <i class="far fa-window-maximize"></i> Output
+                    <i class="far fa-window-maximize"></i> Output <span id="log-title"></span>
                 </div>
-                <div class="post" id="log-window">
-                    <p style="font-weight: 800;">
-                        Select an active exploit to view StdOut || StdError
+                <div class="post is-scrollable" id="log-data">
+                    <p>
+                        No data requested
                     </p>
                 </div>
             </div>
