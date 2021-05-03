@@ -1,5 +1,6 @@
 import logging
 import os
+import shutil
 import json
 import re
 
@@ -55,11 +56,47 @@ def scan_folder():
     return files
 
 
-def write_log(exploit_name, team_name, stream, filename):
-    folder = os.path.join("logs", exploit_name, team_name)
+def write_log(exploit_name, team_name, stream):
+    folder = os.path.join(
+        get_config()["logs"]["folder"], "last", exploit_name.strip('.py'))
 
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-    with open(f"{folder}/{filename}", 'w') as log:
+    with open(f"{folder}/{team_name}.log", 'w') as log:
         log.write(stream)
+
+
+def process_logs(exploit_name):
+    exploit = {}
+    folder = os.path.join(get_config()["logs"]["folder"], "last", exploit_name)
+
+    # handle the case when all exploits work
+    try:
+        logs = [log.strip('.log') for log in os.listdir(folder)]
+    except:
+        logs = []
+
+    for team in get_teams()["teams"]:
+        if team in logs:
+            exploit[team] = False
+        else:
+            exploit[team] = True
+
+    return exploit
+
+
+def clear_logs():
+    folder = get_config()["logs"]["folder"]
+
+    if os.path.exists(folder):
+        for subfolder in os.listdir(folder):
+            shutil.rmtree(os.path.join(folder, subfolder))
+
+
+def push_log(round):
+    folder = get_config()["logs"]["folder"]
+    target = os.path.join(folder, "last")
+
+    if os.path.exists(target):
+        os.rename(target, os.path.join(folder, f"round_{round}"))

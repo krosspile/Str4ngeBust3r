@@ -4,13 +4,16 @@ import threading
 import logging
 import requests
 import sploiter
-from utils import get_config, get_logger, scan_folder
+import utils
 from client import app
 import time
 
 
 def post_flags(data):
-    url = f"{config['server']['host']}:{config['server']['port']}/api/post_flags"
+    server_host = utils.get_config()['server']['host']
+    server_port = utils.get_config()['server']['port']
+
+    url = f"{server_host}:{server_port}/api/post_flags"
 
     for team_name, exploit_name, flag in data:
         data_json = [{'flag': flag,
@@ -21,7 +24,20 @@ def post_flags(data):
         try:
             request = requests.post(url, json=data_json, headers=headers)
         except:
-            logging.info("Unreachable server!")
+            continue
+
+
+def manage_logs():
+    rounds = 0
+
+    while True:
+        rounds += 1
+        time.sleep(utils.get_config()["round_timer"])
+
+        if rounds % utils.get_config()["logs"]["quantity"] == 0:
+            utils.clear_logs()
+
+        utils.push_log(rounds)
 
 
 def run_exploits():
@@ -30,7 +46,7 @@ def run_exploits():
         exploits = []
         threads = []
 
-        for file_name, status in scan_folder():
+        for file_name, status in utils.scan_folder():
             if status == 0:  # not stopped
                 exploits.append(sploiter.Exploit(file_name))
 
@@ -48,7 +64,7 @@ def run_exploits():
                     target=lambda: post_flags(flags))
                 post_thread.start()
 
-        time.sleep(get_config()['client']['post_sleep'])
+        time.sleep(utils.get_config()['client']['post_sleep'])
 
 
 def run_flask(host, port):
@@ -57,7 +73,7 @@ def run_flask(host, port):
 
 def start_services():
     flask_service = threading.Thread(target=run_flask, args=(
-        config["client"]["host"], config["client"]["port"]))
+        utils.get_config()["client"]["host"], utils.get_config()["client"]["port"]))
     flask_service.start()
     logging.info("Flask service started")
 
@@ -65,8 +81,15 @@ def start_services():
     runner_daemon.start()
     logging.info("Exploits daemon started")
 
+    logs_daemon = threading.Thread(target=manage_logs, daemon=True)
+    logs_daemon.start()
+    logging.info("Flags logger daemon started")
+
 
 if __name__ == '__main__':
-    config = get_config()
-    get_logger()
+    config = utils.get_config()
+    utils.get_logger()
+
+    # clear old execution logs first!
+    utils.clear_logs()
     start_services()

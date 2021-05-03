@@ -3,6 +3,8 @@ from utils import parse_flag, get_teams, get_config, write_log
 from os.path import join
 import threading
 
+FLAG_ERROR = "No flag found"
+
 
 class Exploit:
 
@@ -21,18 +23,15 @@ class Exploit:
     def attack_team(self, team_name, ip_address):
         script_path = join(get_config()["client"]["exploit_path"], self.name)
 
-        output = subprocess.Popen(["python3", script_path, ip_address], stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,)
+        stdout = output = subprocess.check_output(
+            ["python3", script_path, ip_address])
 
-        stdout, stderr = output.communicate()
-
-        write_log(self.name, team_name, stdout.decode(), "stdout.log")
-        write_log(self.name, team_name, stderr.decode(), "stderr.log")
-
-        flag = parse_flag(stdout.decode()) if not stderr else ""
+        flag = parse_flag(stdout.decode())
 
         if flag:
             self.store_flag(team_name, flag)
+        else:
+            write_log(self.name, team_name, FLAG_ERROR)
 
     def get_flags(self):
         with self._lock:

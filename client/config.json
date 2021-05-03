@@ -9,5 +9,10 @@
         "host": "http://192.168.0.172",
         "port": 5000
     },
-    "flag_regex": ".+"
+    "logs": {
+        "folder": "logs",
+        "quantity": 10
+    },
+    "flag_regex": ".+",
+    "round_timer": 60
 }
