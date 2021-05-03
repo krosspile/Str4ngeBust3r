@@ -1,7 +1,7 @@
 import logging
+import subprocess
 import threading
-from os import listdir
-from os.path import isfile, join, isdir
+import os
 import time
 import json
 import re
@@ -43,16 +43,26 @@ def scan_folder():
     folder = get_config()['client']['exploit_path']
     files = []
 
-    for file in listdir(folder):
-        path = join(folder, file)
+    for file in os.listdir(folder):
+        path = os.path.join(folder, file)
 
-        if isfile(path):
+        if os.path.isfile(path):
             files.append((file, 0))
 
-        elif isdir(path):
-            for subfile in listdir(path):
+        elif os.path.isdir(path):
+            for subfile in os.listdir(path):
                 files.append((subfile, 1))
 
     files.sort(key=lambda file: file[0])
 
     return files
+
+
+def write_log(exploit_name, team_name, stream, filename):
+    folder = os.path.join("logs", exploit_name, team_name)
+
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    with open(f"{folder}/{filename}", 'w') as log:
+        log.write(stream)

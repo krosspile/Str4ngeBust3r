@@ -13,12 +13,15 @@ def post_flags(data):
     url = f"{config['server']['host']}:{config['server']['port']}/api/post_flags"
 
     for team_name, exploit_name, flag in data:
-        data = [{'flag': flag,
-                'sploit': exploit_name, 'team': team_name}]
+        data_json = [{'flag': flag,
+                      'sploit': exploit_name, 'team': team_name}]
 
         headers = {"Content-Type": "application/json"}
 
-        request = requests.post(url, json=data, headers=headers)
+        try:
+            request = requests.post(url, json=data_json, headers=headers)
+        except:
+            logging.info("Unreachable server!")
 
 
 def run_exploits():
@@ -39,8 +42,11 @@ def run_exploits():
 
         for exploit in exploits:
             flags = exploit.get_flags()
-            post_thread = threading.Thread(target=lambda: post_flags(flags))
-            post_thread.start()
+
+            if flags:
+                post_thread = threading.Thread(
+                    target=lambda: post_flags(flags))
+                post_thread.start()
 
         time.sleep(get_config()['client']['post_sleep'])
 
@@ -55,7 +61,7 @@ def start_services():
     flask_daemon.start()
     logging.info("Flask service started")
 
-    runner_daemon = threading.Thread(target=run_exploits, daemon=True)
+    runner_daemon = threading.Thread(target=run_exploits,)
     runner_daemon.start()
     logging.info("Exploits daemon started")
 
