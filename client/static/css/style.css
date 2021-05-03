@@ -29,17 +29,67 @@ p {
     overflow-y: scroll;
 }
 
+#log-window {
+    overflow-y: scroll;
+}
+
+.is-btn {
+    border:none;
+    transition: background-color 1s ease;
+    color: white;    
+    text-shadow: 1px 2px 1px rgb(0, 0, 0, 0.1);
+}
+
+.is-btn:hover {
+    color: white;
+    background-color: #01172fc5;    
+    transition: background-color 1s ease;
+}
+
+
+#submit-exploit {
+    background-color: #ff8a5b;
+}
+
+#submit-exploit:hover {
+    background-color: #c96239;
+}
+
 .exploit-row {
     padding: 5px;
     border-radius: 6px;
 }
 
-.exploit-row .custom {
-    border: none;
+.exploit-row #is-run {
+    background-color: rgb(41, 196, 118);
 }
 
-.exploit-row a:hover {
-    background-color: aliceblue;
-    color: black;
-    transition: background-color 0.1s ease;
+.exploit-row #is-run:hover {
+    background-color: rgb(20, 116, 68);
+}
+
+.exploit-row #is-delete {
+    background-color: #ff8a5b;
+}
+
+.exploit-row #is-delete:hover {
+    background-color: #be173e;
+}
+
+.exploit-row #is-stop {
+    background-color: #000000;
+}
+
+.exploit-row #is-stop:hover {
+    background-color: #979797;
+}
+
+.exploit-row #is-log {
+    background-color:transparent;
+    border: 1px solid #114B5F;
+    color: #114B5F;
+    text-decoration: none;
+}
+.exploit-row #is-log:hover {
+    background-color: #75bed62f;
 }
