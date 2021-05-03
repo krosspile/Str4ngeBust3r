@@ -34,7 +34,7 @@ def manage_logs():
         rounds += 1
         time.sleep(utils.get_config()["round_timer"])
 
-        if rounds % utils.get_config()["logs"]["quantity"] == 0:
+        if rounds % utils.get_config()["logs"]["history"] == 0:
             utils.clear_logs()
 
         utils.push_log(rounds)

@@ -1,8 +1,11 @@
 import logging
 import os
 import shutil
+import threading
 import json
 import re
+
+_lock = threading.RLock()
 
 
 def get_config():
@@ -60,8 +63,9 @@ def write_log(exploit_name, team_name, stream):
     folder = os.path.join(
         get_config()["logs"]["folder"], "last", exploit_name.strip('.py'))
 
-    if not os.path.exists(folder):
-        os.makedirs(folder)
+    with _lock:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
 
     with open(f"{folder}/{team_name}.log", 'w') as log:
         log.write(stream)
