@@ -56,12 +56,12 @@ def run_flask(host, port):
 
 
 def start_services():
-    flask_daemon = threading.Thread(target=run_flask, args=(
+    flask_service = threading.Thread(target=run_flask, args=(
         config["client"]["host"], config["client"]["port"]))
-    flask_daemon.start()
+    flask_service.start()
     logging.info("Flask service started")
 
-    runner_daemon = threading.Thread(target=run_exploits,)
+    runner_daemon = threading.Thread(target=run_exploits, daemon=True)
     runner_daemon.start()
     logging.info("Exploits daemon started")
 
