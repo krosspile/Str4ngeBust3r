@@ -1,6 +1,8 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, jsonify
-from utils import allowed_extension, get_config, scan_folder, process_logs, ping_server
+import requests
+from werkzeug import utils
+from utils import allowed_extension, get_config, scan_folder, process_logs, ping_server, update_settings
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -73,3 +75,16 @@ def view_log(exploit):
 @app.route('/status')
 def get_status():
     return jsonify(result=ping_server())
+
+
+@app.route('/settings', methods=['POST'])
+def set_server():
+    if request.method == 'POST':
+        data = {}
+
+        if request.form['host'] and request.form['port']:
+            data["host"] = request.form['host']
+            data["port"] = request.form['port']
+            update_settings(data)
+
+        return redirect('/')

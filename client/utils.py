@@ -10,7 +10,7 @@ _lock = threading.RLock()
 
 
 def get_config():
-    with open('config.json') as config:
+    with open('config.json', 'r') as config:
         return json.load(config)
 
 
@@ -63,6 +63,18 @@ def scan_folder():
     files.sort(key=lambda file: file[0])
 
     return files
+
+
+def update_settings(data):
+    config_dict = {}
+
+    with open('config.json', 'r') as config:
+        config_dict = json.load(config)
+        config_dict["server"]["host"] = data["host"]
+        config_dict["server"]["port"] = int(data["port"])
+
+    with open('config.json', 'w') as config:
+        json.dump(config_dict, config)
 
 
 def write_log(exploit_name, team_name, stream):

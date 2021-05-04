@@ -17,7 +17,7 @@ $(document).ready(function () {
                 if (colCounter % 4 == 0)
                     code += '<div class="row">'
 
-                code += '<div class="col">' + key + ' '
+                code += '<div class="col-lg-3">' + key + ' '
 
                 if (value == true)
                     code += ' <i class="fas fa-check" style="color: green"></i>'
@@ -67,6 +67,10 @@ $(document).ready(function () {
             $("#row-" + data["genericId"]).addClass('is-hide')
     });
 
+    $("#is-update").on("click", function () {
+        console.log($('#server-data').serialize())
+    });
+
     $("#is-refresh").on("click", function () {
         $.ajax("/status").done(function (status) {
 
@@ -75,6 +79,7 @@ $(document).ready(function () {
                 $("#server-up-icon").removeClass('is-hide')
                 $("#server-down-text").addClass('is-hide')
                 $("#server-down-icon").addClass('is-hide')
+                $('button[id^=is-run').prop('disabled', false);
             }
 
             else if (($("#server-down-text").hasClass('is-hide') == true && status["result"]["online"] == false)) {
@@ -82,6 +87,7 @@ $(document).ready(function () {
                 $("#server-down-icon").removeClass('is-hide')
                 $("#server-up-text").addClass('is-hide')
                 $("#server-up-icon").addClass('is-hide')
+                $('button[id^=is-run').prop('disabled', true);
             }
         });
     });
