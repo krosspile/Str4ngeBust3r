@@ -29,29 +29,32 @@ def post_flags(data):
 
 def run_exploits():
     while True:
+        if utils.ping_server()["online"] == True:
+            exploits = []
+            threads = []
 
-        exploits = []
-        threads = []
+            for file_name, status in utils.scan_folder():
+                if status == 0:  # not stopped
+                    exploits.append(sploiter.Exploit(file_name))
 
-        for file_name, status in utils.scan_folder():
-            if status == 0:  # not stopped
-                exploits.append(sploiter.Exploit(file_name))
+            for exploit in exploits:
+                thread = threading.Thread(target=exploit.run)
+                thread.start()
+                threads.append(thread)
+                thread.join()
 
-        for exploit in exploits:
-            thread = threading.Thread(target=exploit.run)
-            thread.start()
-            threads.append(thread)
-            thread.join()
+            for exploit in exploits:
+                flags = exploit.get_flags()
 
-        for exploit in exploits:
-            flags = exploit.get_flags()
+                if flags:
+                    post_thread = threading.Thread(
+                        target=lambda: post_flags(flags))
+                    post_thread.start()
 
-            if flags:
-                post_thread = threading.Thread(
-                    target=lambda: post_flags(flags))
-                post_thread.start()
-
-        time.sleep(utils.get_config()['client']['post_sleep'])
+        try:
+            time.sleep(utils.get_server_config()['SUBMIT_PERIOD'])
+        except:
+            time.sleep(utils.get_config()["timeout"])
 
 
 def run_flask(host, port):

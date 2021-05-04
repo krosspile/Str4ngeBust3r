@@ -14,6 +14,12 @@ def get_config():
         return json.load(config)
 
 
+def get_server_config():
+    host = get_config()["server"]["host"]
+    port = get_config()["server"]["port"]
+    return requests.get(f"{host}:{port}/api/get_config").json()
+
+
 def get_logger():
     format = "%(asctime)s: %(message)s"
     datefmt = "%H:%M:%S"
@@ -21,8 +27,7 @@ def get_logger():
 
 
 def get_teams():
-    with open('teams.json') as teams:
-        return json.load(teams)
+    return get_server_config()["TEAMS"]
 
 
 def allowed_extension(filename):
@@ -30,7 +35,7 @@ def allowed_extension(filename):
 
 
 def parse_flag(input):
-    regex = get_config()["flag_regex"]
+    regex = get_server_config()["FLAG_FORMAT"]
     result = re.findall(regex, input)
     return result[0] if result else None
 
@@ -84,7 +89,7 @@ def process_logs(exploit_name):
     except:
         logs = []
 
-    for team in get_teams()["teams"]:
+    for team in get_teams():
         exploit[team] = False if team in logs else True
 
     return exploit

@@ -43,7 +43,7 @@ class Exploit:
         return data
 
     def run(self):
-        teams = get_teams()["teams"]
+        teams = get_teams()
         threads = []
 
         for team_name in teams:

@@ -3,7 +3,7 @@
         "host": "127.0.0.1",
         "port": 5000,
         "exploit_path": "exploits",
-        "post_sleep": 3
+        "post_sleep": 20
     },
     "server": {
         "host": "http://192.168.0.172",
@@ -12,5 +12,5 @@
     "logs": {
         "folder": "logs"
     },
-    "flag_regex": ".+"
+    "timeout": 60
 }
