@@ -42,11 +42,11 @@ p {
     transition: background-color 1s ease;
 }
 
-#submit-exploit {
+.is-orange {
     background-color: #df6333;
 }
 
-#submit-exploit:hover {
+.is-orange:hover {
     background-color: #ff8656;
 }
 
@@ -84,6 +84,11 @@ p {
     border: 1px solid #114B5F;
     color: #114B5F;
     text-decoration: none;
+}
+
+#is-refresh {
+    padding: 15px 5px;
+    width: 100%;
 }
 
 .exploit-row .is-log:hover {

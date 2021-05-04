@@ -38,7 +38,7 @@
                                 <input class="form-control" type="file" name="exploit" id="formFile">
                             </div>
                             <div class="col">
-                                <input type="submit" class="btn btn-primary is-btn" id="submit-exploit" />
+                                <input type="submit" class="btn is-btn is-orange" />
                             </div>
                         </div>
                     </form>
@@ -56,18 +56,20 @@
                         </div>
                         <div class="col-8 d-flex justify-content-end">
 
-                            <a class="is-log is-btn btn-sm ms-2 {% if status == 1%}is-hide{% endif %}
-                            " id="is-log-{{loop.index}}" data-name="{{name}}"><i class="fas fa-eye"></i></i> Logs</a>
+                            <button class="is-log is-btn btn-sm ms-2 {% if status == 1%}is-hide{% endif %}
+                            " id="is-log-{{loop.index}}" data-name="{{name}}"><i class="fas fa-eye"></i></i>
+                                Logs</button>
 
-                            <a class="btn-sm is-btn ms-2 is-run {% if status == 0%}is-hide{% endif %}"
-                                id="is-run-{{loop.index}}" data-name="{{name}}"><i class="fas fa-biohazard"></i></a>
-                            <a class="is-btn btn-sm ms-2 is-stop {% if
+                            <button class="btn-sm is-btn ms-2 is-run {% if status == 0%}is-hide{% endif %}"
+                                id="is-run-{{loop.index}}" data-name="{{name}}"><i
+                                    class="fas fa-biohazard"></i></button>
+                            <button class="is-btn btn-sm ms-2 is-stop {% if
                                 status==1 %}is-hide {% endif %}" id="is-stop-{{loop.index}}" data-name="{{name}}"><i
-                                    class="fas fa-stop"></i></i></a>
+                                    class="fas fa-stop"></i></i></button>
 
-                            <a class="btn-sm is-btn ms-2 is-delete" id="is-delete-{{loop.index}}"
+                            <button class="btn-sm is-btn ms-2 is-delete" id="is-delete-{{loop.index}}"
                                 data-name="{{name}}"><i class="fas fa-trash"></i>
-                            </a>
+                            </button>
 
                         </div>
                     </div>
@@ -90,10 +92,41 @@
                 <div class="title" style="background-color:#ff8a5b">
                     <i class="fas fa-server"></i> Server status
                 </div>
-                <div class="post">
-                    <p style="font-weight: 800;">
-                        Pls script me
-                    </p>
+                <div class="post is-scrollable">
+                    <div class="row mt-4">
+                        <div class="col">Server:</div>
+                        <div class="col">
+                            {{srv_status["host"]}}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">Port:</div>
+                        <div class="col">
+                            {{srv_status["port"]}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col d-flex align-items-center">
+
+                            <span {%if srv_status["online"]==True %}class="is-hide" {%endif %} id="server-down-text">
+                                Server is down </span>
+                            <span {%if srv_status["online"]==False %}class="is-hide" {%endif %} id="server-up-text">
+                                Server is up
+                            </span>
+                        </div>
+                        <div class="col">
+                            <i class="fas fa-check-circle {%if srv_status[" online"]==False %} is-hide {% endif %}"
+                                style=" color: green;" id="server-up-icon"></i>
+                            <i class="fas fa-times-circle {%if srv_status[" online"]==True %} is-hide {% endif %}"
+                                style="color: rgb(192, 9, 9)" id="server-down-icon"></i>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <button class="btn is-btn is-orange" id="is-refresh">Refresh</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

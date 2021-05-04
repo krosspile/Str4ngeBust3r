@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, jsonify
-from utils import allowed_extension, get_config, scan_folder, process_logs
+from utils import allowed_extension, get_config, scan_folder, process_logs, ping_server
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    return render_template('index.html', exploits=scan_folder())
+    return render_template('index.html', exploits=scan_folder(), srv_status=ping_server())
 
 
 @app.route('/send_exploit', methods=['GET', 'POST'])
@@ -65,6 +65,11 @@ def delete_exploit(exploit, status):
     return jsonify(result="Ok")
 
 
-@app.route('/viewlog/<exploit>')
+@app.route('/log/<exploit>')
 def view_log(exploit):
     return jsonify(result=process_logs(exploit))
+
+
+@app.route('/status')
+def get_status():
+    return jsonify(result=ping_server())

@@ -12,25 +12,24 @@ $(document).ready(function () {
 
         let code = ""
 
-        $.ajax("/viewlog/" + data["scriptName"]).done(function (logs) {
+        $.ajax("/log/" + data["scriptName"]).done(function (logs) {
             $.each(logs["result"], (key, value) => {
-                if (colCounter % 4 == 0) {
+                if (colCounter % 4 == 0)
                     code += '<div class="row">'
-                }
+
                 code += '<div class="col">' + key + ' '
 
-                if (value == true) {
+                if (value == true)
                     code += ' <i class="fas fa-check" style="color: green"></i>'
-                } else {
+
+                else
                     code += ' <i class="fas fa-times" style="color:red"></i>'
-                }
 
                 code += '</div>'
                 colCounter++
 
-                if (colCounter % 4 == 0) {
+                if (colCounter % 4 == 0)
                     code += '</div>'
-                }
             })
             $("#log-data").html(code);
         })
@@ -58,15 +57,32 @@ $(document).ready(function () {
         let data = getRowInfo($(this))
         let error = 0
 
-        if ($("#is-run-" + data["genericId"]).hasClass('is-hide')) {
+        if ($("#is-run-" + data["genericId"]).hasClass('is-hide'))
             $.ajax("/delete/" + data["scriptName"] + "/0").fail(() => { error = 1 })
-        }
-        else {
-            $.ajax("/delete/" + data["scriptName"] + "/1").fail(() => { error = 1 })
-        }
 
-        if (!error) {
+        else
+            $.ajax("/delete/" + data["scriptName"] + "/1").fail(() => { error = 1 })
+
+        if (!error)
             $("#row-" + data["genericId"]).addClass('is-hide')
-        }
+    });
+
+    $("#is-refresh").on("click", function () {
+        $.ajax("/status").done(function (status) {
+
+            if ($("#server-up-text").hasClass('is-hide') == true && status["result"]["online"] == true) {
+                $("#server-up-text").removeClass('is-hide')
+                $("#server-up-icon").removeClass('is-hide')
+                $("#server-down-text").addClass('is-hide')
+                $("#server-down-icon").addClass('is-hide')
+            }
+
+            else if (($("#server-down-text").hasClass('is-hide') == true && status["result"]["online"] == false)) {
+                $("#server-down-text").removeClass('is-hide')
+                $("#server-down-icon").removeClass('is-hide')
+                $("#server-up-text").addClass('is-hide')
+                $("#server-up-icon").addClass('is-hide')
+            }
+        });
     });
 });

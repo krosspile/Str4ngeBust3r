@@ -1,6 +1,7 @@
 import logging
 import os
 import shutil
+import requests
 import threading
 import json
 import re
@@ -78,7 +79,8 @@ def process_logs(exploit_name):
 
     # handle the case when all exploits work
     try:
-        logs = [log.strip('.log') for log in os.listdir(folder)]
+        # .strip('.log') is bugged! WTF
+        logs = [log[:-4] for log in os.listdir(folder)]
     except:
         logs = []
 
@@ -94,3 +96,18 @@ def clear_logs(subfolder=""):
     with _lock:
         if os.path.exists(folder):
             shutil.rmtree(folder)
+
+
+def ping_server():
+    response = {}
+
+    response["host"] = get_config()['server']['host'].strip("http://")
+    response["port"] = get_config()['server']['port']
+
+    try:
+        req = requests.head(f"http://{response['host']}:{response['port']}")
+        response["online"] = True
+    except:
+        response["online"] = False
+
+    return response
