@@ -72,23 +72,23 @@ $(document).ready(function () {
     });
 
     $("#is-refresh").on("click", function () {
-        $.ajax("/status").done(function (status) {
+        let state = ["down", "up"];
 
+        $.ajax("/status").done(function (status) {
             if ($("#server-up-text").hasClass('is-hide') == true && status["result"]["online"] == true) {
-                $("#server-up-text").removeClass('is-hide')
-                $("#server-up-icon").removeClass('is-hide')
-                $("#server-down-text").addClass('is-hide')
-                $("#server-down-icon").addClass('is-hide')
+                preStatus = 0
                 $('button[id^=is-run').prop('disabled', false);
             }
 
             else if (($("#server-down-text").hasClass('is-hide') == true && status["result"]["online"] == false)) {
-                $("#server-down-text").removeClass('is-hide')
-                $("#server-down-icon").removeClass('is-hide')
-                $("#server-up-text").addClass('is-hide')
-                $("#server-up-icon").addClass('is-hide')
+                preStatus = 1
                 $('button[id^=is-run').prop('disabled', true);
             }
+
+            $("#server-" + state[1 - preStatus] + "-text").removeClass('is-hide')
+            $("#server-" + state[1 - preStatus] + "-icon").removeClass('is-hide')
+            $("#server-" + state[preStatus] + "-text").addClass('is-hide')
+            $("#server-" + state[preStatus] + "-icon").addClass('is-hide')
         });
     });
 });
