@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, jsonify
-from utils import allowed_extension, get_config, scan_folder, process_logs, ping_server, update_settings, stats
+from utils import allowed_extension, get_config, process_stats, scan_folder, process_logs, ping_server, update_settings, process_stats
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -90,4 +90,4 @@ def set_server():
 
 @app.route('/stats')
 def get_stats():
-    return jsonify(stats)
+    return jsonify(process_stats())
