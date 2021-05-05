@@ -1,5 +1,5 @@
 import subprocess
-from utils import parse_flag, get_teams, get_config, write_log, clear_logs, store_result
+import utils
 from os.path import join
 import threading
 
@@ -21,19 +21,20 @@ class Exploit:
                 self.flags.append(entry)
 
     def attack_team(self, team_name, ip_address):
-        script_path = join(get_config()["client"]["exploit_path"], self.name)
+        script_path = join(utils.get_config()[
+                           "client"]["exploit_path"], self.name)
 
         stdout = subprocess.check_output(
             ["python3", script_path, ip_address])
 
-        flag = parse_flag(stdout.decode())
+        flag = utils.parse_flag(stdout.decode())
 
         if flag:
             self.store_flag(team_name, flag)
-            clear_logs(self.name.strip('.py'))
+            utils.clear_logs(self.name.strip('.py'))
         else:
-            write_log(self.name, team_name, FLAG_ERROR)
-            store_result(self.name, "fail")
+            utils.write_log(self.name, team_name, FLAG_ERROR)
+            utils.store_result(self.name, "fail")
 
     def get_flags(self):
         with self._lock:
@@ -44,7 +45,7 @@ class Exploit:
         return data
 
     def run(self):
-        teams = get_teams()
+        teams = utils.get_teams()
         threads = []
 
         for team_name in teams:
