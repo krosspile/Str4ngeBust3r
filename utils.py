@@ -16,10 +16,21 @@ def get_config():
         return json.load(config)
 
 
-def get_server_config():
+def cache_config():
     host = get_config()["server"]["host"]
     port = get_config()["server"]["port"]
-    return requests.get(f"{host}:{port}/api/get_config").json()
+
+    with open('server_config.json', 'w') as config:
+        server_config = requests.get(f"{host}:{port}/api/get_config").json()
+        json.dump(server_config, config)
+
+
+def get_server_config():
+    if 'server_config.json' not in os.listdir():
+        cache_config()
+
+    with open('server_config.json', 'r') as config:
+        return json.load(config)
 
 
 def get_logger():
