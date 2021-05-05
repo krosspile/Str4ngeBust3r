@@ -22,8 +22,10 @@ def post_flags(data):
         headers = {"Content-Type": "application/json"}
 
         try:
-            request = requests.post(url, json=data_json, headers=headers)
+            requests.post(url, json=data_json, headers=headers)
+            utils.store_result(exploit_name, "success")
         except:
+            utils.store_result(exploit_name, "fail")
             continue
 
 

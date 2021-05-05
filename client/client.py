@@ -1,8 +1,6 @@
 import os
-from flask import Flask, render_template, request, flash, redirect, jsonify
-import requests
-from werkzeug import utils
-from utils import allowed_extension, get_config, scan_folder, process_logs, ping_server, update_settings
+from flask import Flask, render_template, request, redirect, jsonify
+from utils import allowed_extension, get_config, scan_folder, process_logs, ping_server, update_settings, stats
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -88,3 +86,8 @@ def set_server():
             update_settings(data)
 
         return redirect('/')
+
+
+@app.route('/stats')
+def get_stats():
+    return jsonify(stats)

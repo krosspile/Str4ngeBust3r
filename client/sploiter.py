@@ -1,5 +1,5 @@
 import subprocess
-from utils import parse_flag, get_teams, get_config, write_log, clear_logs
+from utils import parse_flag, get_teams, get_config, write_log, clear_logs, store_result
 from os.path import join
 import threading
 
@@ -10,7 +10,7 @@ class Exploit:
 
     def __init__(self, exploit_name):
         self.name = exploit_name
-        self._lock = threading.RLock()
+        self._lock = threading.Lock()
         self.flags = []
 
     def store_flag(self, team_name, flag):
@@ -33,6 +33,7 @@ class Exploit:
             clear_logs(self.name.strip('.py'))
         else:
             write_log(self.name, team_name, FLAG_ERROR)
+            store_result(self.name, "fail")
 
     def get_flags(self):
         with self._lock:

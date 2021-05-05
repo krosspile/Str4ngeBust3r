@@ -6,7 +6,9 @@ import threading
 import json
 import re
 
-_lock = threading.RLock()
+_folder_lock = threading.Lock()
+_stats_lock = threading.Lock()
+stats = {"success": {}, "fail": {}}
 
 
 def get_config():
@@ -81,7 +83,7 @@ def write_log(exploit_name, team_name, stream):
     folder = os.path.join(
         get_config()["logs"]["folder"], exploit_name.strip('.py'))
 
-    with _lock:
+    with _folder_lock:
         if not os.path.exists(folder):
             os.makedirs(folder)
 
@@ -110,7 +112,7 @@ def process_logs(exploit_name):
 def clear_logs(subfolder=""):
     folder = os.path.join(get_config()["logs"]["folder"], subfolder)
 
-    with _lock:
+    with _folder_lock:
         if os.path.exists(folder):
             shutil.rmtree(folder)
 
@@ -128,3 +130,11 @@ def ping_server():
         response["online"] = False
 
     return response
+
+
+def store_result(exploit_name, result):
+    with _stats_lock:
+        if exploit_name not in stats[result]:
+            stats[result][exploit_name] = 1
+        else:
+            stats[result][exploit_name] += 1
