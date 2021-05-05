@@ -4,8 +4,8 @@ function getRowInfo(obj) {
 }
 
 $(document).ready(function () {
-    let colCounter = 0
     $(".is-log").on("click", function () {
+        let colCounter = 0
         let data = getRowInfo($(this))
 
         $("#log-title").html(": " + data["scriptName"]);
