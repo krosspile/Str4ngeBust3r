@@ -8,13 +8,13 @@ function refreshStatus() {
     let preStatus
 
     $.ajax("/status").done(function (status) {
-        if ($("#server-up-text").hasClass('is-hide') == true && status["result"]["online"] == true) {
+        if ($("#server-up-text").hasClass('is-hide') == true && status["online"] == true) {
             preStatus = 0
             $('button[id^=is-run').prop('disabled', false);
             $('button[id^=is-log').prop('disabled', false);
         }
 
-        else if (($("#server-down-text").hasClass('is-hide') == true && status["result"]["online"] == false)) {
+        else if (($("#server-down-text").hasClass('is-hide') == true && status["online"] == false)) {
             preStatus = 1
             $('button[id^=is-run').prop('disabled', true);
             $('button[id^=is-log').prop('disabled', true);
@@ -61,7 +61,7 @@ $(document).ready(function () {
         let code = ""
 
         $.ajax("/log/" + data["scriptName"]).done(function (logs) {
-            $.each(logs["result"], (key, value) => {
+            $.each(logs, (key, value) => {
                 if (colCounter % 3 == 0)
                     code += '<div class="row">'
 
