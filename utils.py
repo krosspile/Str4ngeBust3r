@@ -85,6 +85,8 @@ def update_settings(data):
         config_dict = json.load(config)
         config_dict["server"]["host"] = data["host"]
         config_dict["server"]["port"] = int(data["port"])
+    
+    os.remove('server_config.json')
 
     with open('config.json', 'w') as config:
         json.dump(config_dict, config)
