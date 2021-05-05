@@ -20,9 +20,11 @@ def cache_config():
     host = get_config()["server"]["host"]
     port = get_config()["server"]["port"]
 
-    with open('server_config.json', 'w') as config:
-        server_config = requests.get(f"{host}:{port}/api/get_config").json()
-        json.dump(server_config, config)
+    if ping_server()["online"] == True:
+        with open('server_config.json', 'w') as config:
+            server_config = requests.get(
+                f"{host}:{port}/api/get_config").json()
+            json.dump(server_config, config)
 
 
 def get_server_config():
@@ -85,7 +87,7 @@ def update_settings(data):
         config_dict = json.load(config)
         config_dict["server"]["host"] = data["host"]
         config_dict["server"]["port"] = int(data["port"])
-    
+
     os.remove('server_config.json')
 
     with open('config.json', 'w') as config:
