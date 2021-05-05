@@ -1,12 +1,16 @@
 # Str4ngeBust3r
-## A/D CTF client
 
-<img src="../client/docs/screen.png" width="800">
-
+![screenshot](docs/screen.png)
 Graphical client for [DestructiveFarm](https://github.com/Str4ngeb0yz/DestructiveFarm)
 
-## Run:
+## Docker
+
+Run in `docker` with:
+
 ```bash
-pip3 install -r requirements.txt
-./handler.py
+git clone https://github.com/Str4ngeb0yz/Str4ngeBust3r.git
+docker build -t st4ngebust3r .
+docker run -p 5000:5000 -d st4ngebust3r
 ```
+
+Visit <http://0.0.0.0:5000/>
