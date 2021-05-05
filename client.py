@@ -42,10 +42,13 @@ def stop_exploit(exploit):
     filename = secure_filename(exploit)
 
     stopped_path = os.path.join(
-        utils.get_config()["client"]["exploit_path"], f"stopped/{filename}")
+        utils.get_config()["client"]["exploit_path"], "stopped")
+
+    if not os.path.exists(stopped_path):
+        os.makedirs(stopped_path)
 
     os.rename(os.path.join(
-        utils.get_config()["client"]["exploit_path"], filename), stopped_path)
+        utils.get_config()["client"]["exploit_path"], filename), os.path.join(stopped_path, filename))
 
     return jsonify(result="Ok")
 

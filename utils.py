@@ -65,6 +65,9 @@ def scan_folder():
     folder = get_config()['client']['exploit_path']
     files = []
 
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
     for file in os.listdir(folder):
         path = os.path.join(folder, file)
 
