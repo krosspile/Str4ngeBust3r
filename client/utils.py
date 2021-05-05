@@ -8,7 +8,7 @@ import re
 
 _folder_lock = threading.Lock()
 _stats_lock = threading.Lock()
-stats = {"success": {}, "fail": {}}
+stats = {}
 
 
 def get_config():
@@ -134,7 +134,26 @@ def ping_server():
 
 def store_result(exploit_name, result):
     with _stats_lock:
-        if exploit_name not in stats[result]:
-            stats[result][exploit_name] = 1
+        if exploit_name not in stats:
+            stats[exploit_name] = {}
+
+        if result not in stats[exploit_name]:
+            stats[exploit_name][result] = 1
         else:
-            stats[result][exploit_name] += 1
+            stats[exploit_name][result] += 1
+
+
+def process_stats():
+    states = ["fail", "success"]
+
+    with _stats_lock:
+        for exploit in stats:
+            for state in states:
+                stats[exploit][state] = 0 if state not in stats[exploit]else stats[exploit][state]
+
+        # uniform data representation
+        for exploit in stats:
+            stats[exploit] = dict([(state, stats[exploit].get(state))
+                                   for state in states])
+
+    return stats

@@ -2,8 +2,7 @@
     "client": {
         "host": "127.0.0.1",
         "port": 5000,
-        "exploit_path": "exploits",
-        "post_sleep": 20
+        "exploit_path": "exploits"
     },
     "server": {
         "host": "http://192.168.0.172",
