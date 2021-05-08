@@ -11,5 +11,5 @@
     "logs": {
         "folder": "logs"
     },
-    "timeout": 60
+    "timeout": 40
 }

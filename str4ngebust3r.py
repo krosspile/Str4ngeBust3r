@@ -53,9 +53,6 @@ def run_exploits():
                         target=lambda: post_flags(flags))
                     post_thread.start()
 
-        try:
-            time.sleep(utils.get_server_config()['SUBMIT_PERIOD'])
-        except:
             time.sleep(utils.get_config()["timeout"])
 
 
