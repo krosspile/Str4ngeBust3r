@@ -8,7 +8,9 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    return render_template('index.html', exploits=utils.scan_folder(), srv_status=utils.ping_server())
+    return render_template('index.html',
+                           exploits=utils.scan_folder(),
+                           srv_status=utils.ping_server())
 
 
 @app.route('/send_exploit', methods=['GET', 'POST'])
@@ -18,8 +20,9 @@ def send_exploit():
         file = request.files['exploit']
 
         if len(file.filename) > 0 and utils.allowed_extension(file.filename):
-            file.save(os.path.join(
-                utils.get_config()["client"]["exploit_path"], secure_filename(file.filename)))
+            file.save(
+                os.path.join(utils.get_config()["client"]["exploit_path"],
+                             secure_filename(file.filename)))
 
         return redirect('/')
 
@@ -31,8 +34,9 @@ def start_exploit(exploit):
     stopped_exploit = os.path.join(
         utils.get_config()["client"]["exploit_path"], f"stopped/{filename}")
 
-    os.rename(stopped_exploit, os.path.join(
-        utils.get_config()["client"]["exploit_path"], filename))
+    os.rename(
+        stopped_exploit,
+        os.path.join(utils.get_config()["client"]["exploit_path"], filename))
 
     return jsonify(result="Ok")
 
@@ -41,14 +45,15 @@ def start_exploit(exploit):
 def stop_exploit(exploit):
     filename = secure_filename(exploit)
 
-    stopped_path = os.path.join(
-        utils.get_config()["client"]["exploit_path"], "stopped")
+    stopped_path = os.path.join(utils.get_config()["client"]["exploit_path"],
+                                "stopped")
 
     if not os.path.exists(stopped_path):
         os.makedirs(stopped_path)
 
-    os.rename(os.path.join(
-        utils.get_config()["client"]["exploit_path"], filename), os.path.join(stopped_path, filename))
+    os.rename(
+        os.path.join(utils.get_config()["client"]["exploit_path"], filename),
+        os.path.join(stopped_path, filename))
 
     return jsonify(result="Ok")
 
@@ -58,12 +63,14 @@ def delete_exploit(exploit, status):
     filename = secure_filename(exploit)
 
     if status == "0":
-        os.remove(os.path.join(
-            utils.get_config()["client"]["exploit_path"], filename))
+        os.remove(
+            os.path.join(utils.get_config()["client"]["exploit_path"],
+                         filename))
 
     elif status == "1":
-        os.remove(os.path.join(
-            utils.get_config()["client"]["exploit_path"], f"stopped/{filename}"))
+        os.remove(
+            os.path.join(utils.get_config()["client"]["exploit_path"],
+                         f"stopped/{filename}"))
 
     return jsonify(result="Ok")
 
@@ -86,7 +93,7 @@ def set_server():
         if request.form['host'] and request.form['port']:
             data["host"] = request.form['host']
             data["port"] = request.form['port']
-            
+
             utils.update_settings(data)
         return redirect('/')
 
