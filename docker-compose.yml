@@ -1,8 +1,7 @@
 version: "3.7"
-
 services:
   client:
-    image: ghcr.io/str4ngeb0yz/str4ngebust3r_client
-    build: .
-    ports:
-      - "5000:5000"
+          build: .
+          image: str4ngebust3r_client
+          ports:
+                  - "5000:5000"

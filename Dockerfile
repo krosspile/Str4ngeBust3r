@@ -11,4 +11,4 @@ COPY ./ ./
 
 EXPOSE 5000
 
-ENTRYPOINT [ "python3", "str4ngebust3r.py"]
+CMD [ "python3", "str4ngebust3r.py"]
