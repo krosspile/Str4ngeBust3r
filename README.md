@@ -20,3 +20,7 @@ docker-compose up
 ```
 
 Visit <http://0.0.0.0:5000/>
+
+### Note
+
+If you plan to use this client under `docker`, you have to include every dependency in use in your exploits into `requirements.txt`
