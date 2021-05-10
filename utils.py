@@ -143,7 +143,8 @@ def ping_server():
     response["port"] = get_config()['server']['port']
 
     try:
-        req = requests.head(f"http://{response['host']}:{response['port']}")
+        req = requests.head(
+            f"http://{response['host']}:{response['port']}", timeout=1)
         response["online"] = True
     except:
         response["online"] = False
